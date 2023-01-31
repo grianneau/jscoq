@@ -1,6 +1,6 @@
 .PHONY: all clean force
 .PHONY: jscoq jscoq_worker links links-clean
-.PHONY: dist dist-upload dist-release serve
+.PHONY: dist serve
 
 -include ./config.inc
 
@@ -80,6 +80,7 @@ all:
 	@echo ""
 	@echo "    bundle: create the core JS bundles using esbuild in dist"
 	@echo " typecheck: typecheck using tsc"
+	@echo "   release: create the core JS bundles using release mode"
 	@echo ""
 	@echo "     links: create links that allow to serve pages from the source tree"
 	@echo "            [note: jscoq build system auto-promotoes targets so this is obsolete]"
@@ -133,6 +134,10 @@ typecheck:
 	$(DUNE) build node_modules
 	$(DUNE) exec --context=$(BUILD_CONTEXT) -- npm run typecheck
 
+release:
+	JSCOQ_BUNDLE_TARGET=release $(DUNE) build dist
+	JSCOQ_BUNDLE_TARGET=release-cli $(DUNE) build dist-cli
+
 # Build symbol database files for autocomplete
 coq-pkgs/%.symb.json: coq-pkgs/%.coq-pkg
 	@node --max-old-space-size=2048 ./dist-cli/cli.cjs run --require-pkg $* --inspect $@
@@ -175,8 +180,7 @@ distclean: clean
 
 dist: dist-npm dist-tarball
 
-BUILDOBJ = ${addprefix $(BUILDDIR)/./, \
-	jscoq.js coq-pkgs frontend backend dist examples docs}
+BUILDOBJ = ${addprefix $(BUILDDIR)/./, coq-pkgs dist examples docs}
 DISTOBJ = README.md index.html package.json package-lock.json $(BUILDOBJ)
 DISTDIR = _build/dist
 
@@ -215,8 +219,7 @@ dist-npm:
 #
 # The following needs to be changed if we want to create separate `jscoq` and `wacoq` packages
 #
-WACOQ_NPMOBJ = README.md \
-	jscoq.js frontend backend examples dist docs
+WACOQ_NPMOBJ = README.md dist/frontend/index.js dist/frontend/index.css dist/wacoq_worker.js examples docs
 # ^ plus `package.json` and `docs/npm-landing.html` that have separate treatment
 
 dist-npm-wacoq:

@@ -1,6 +1,6 @@
 {
   "name": "wacoq",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "description": "A port of Coq to WebAssembly -- run Coq in your browser",
   "type": "module",
   "main": "frontend/classic/js/index.js",
@@ -59,21 +59,21 @@
     "webpack-cli": "^4.7.2"
   },
   "files": [
-    "frontend",
-    "backend/*.js",
-    "backend/*.ts",
-    "examples",
-    "dist",
+    "dist/wacoq_worker.js",
+    "dist/frontend/index.js",
+    "dist/frontend/index.css",
+    "coq-pkgs",
     "examples",
     "docs/*.html",
-    "jscoq.js",
     "index.html"
   ],
   "scripts": {
-    "build": "webpack --mode production",
-    "build:dev": "webpack",
-    "watch": "webpack -w",
-    "prepack": "sed -i.in 's/\\(is_npm:\\) false/\\1 true/;s/\\(backend:\\) .*/\\1 '\\'wa\\',/ frontend/classic/js/index.js"
+    "esbuild": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "release": "node esbuild.mjs --minify --sourcemap=no",
+    "typecheck": "tsc -b .",
+    "webpack": "webpack",
+    "esbuild-cli": "node esbuild-cli.mjs"
   },
   "repository": {
     "type": "git",

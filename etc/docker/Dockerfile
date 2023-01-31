@@ -86,6 +86,7 @@ ARG NJOBS=4
 RUN git pull --ff-only
 RUN if [ _${SUB_BRANCH} != _ ] ; then git checkout ${SUB_BRANCH} && git pull --ff-only ; fi
 RUN eval $(opam env) && make coq
+RUN export JSCOQ_BUNDLE_TARGET=release
 RUN eval $(opam env) && make jscoq
 RUN eval $(opam env) && make wacoq
 

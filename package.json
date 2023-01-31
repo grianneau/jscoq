@@ -71,17 +71,13 @@
     "webpack-cli": "^4.10.0"
   },
   "files": [
-    "frontend",
-    "backend/*.js",
-    "backend/*.ts",
-    "backend/jsoo/*.bc.cjs",
-    "backend/wasm/*.bc",
+    "dist/wacoq_worker.js",
+    "dist/frontend/index.js",
+    "dist/frontend/index.css",
     "backend/wasm/*.wasm",
     "coq-pkgs",
-    "dist",
     "examples",
-    "docs",
-    "jscoq.js",
+    "docs/*.html",
     "index.html"
   ],
   "scripts": {
@@ -90,7 +86,8 @@
     "release": "node esbuild.mjs --minify --sourcemap=no",
     "typecheck": "tsc -b .",
     "webpack": "webpack",
-    "esbuild-cli": "node esbuild-cli.mjs"
+    "esbuild-cli": "node esbuild-cli.mjs",
+    "release-cli": "node esbuild-cli.mjs --minify --sourcemap=no"
   },
   "repository": {
     "type": "git",
