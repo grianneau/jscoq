@@ -137,7 +137,7 @@ export class CmCoqProvider {
      * @param {number} idx
      * @memberof CmCoqProvider
      */
-    constructor(element, options : CM5Options, replace : boolean, idx : number, manager) {
+    constructor(element, options : CM5Options, replace : boolean, idx : number) {
 
         CmCoqProvider._config();
 
