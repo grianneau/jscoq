@@ -16,7 +16,6 @@ jobs:
       NJOBS: "2"
       JSCOQ_ARCH: ${{ matrix.jscoq_arch }}
       OPAM_LINUX_URL: https://github.com/ocaml/opam/releases/download/2.1.3/opam-2.1.3-x86_64-linux
-      OPAM_MACOS_URL: https://github.com/ocaml/opam/releases/download/2.1.3/opam-2.1.3-x86_64-darwin
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
